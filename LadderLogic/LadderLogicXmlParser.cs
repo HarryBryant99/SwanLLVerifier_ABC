@@ -1,0 +1,126 @@
+﻿using SwanLLVerifier.ETCSDC_Properties;
+using System.Xml;
+using static SwanLLVerifier.PropositionalLogic.PropositionalFormulaBuilder;
+
+namespace SwanLLVerifier.LadderLogic
+{
+    public class LadderLogicXmlParser
+    {
+        public static Ladder ParseXML(XmlDocument doc)
+        {
+            Ladder ladder = new();
+
+            var nsmgr = new XmlNamespaceManager(doc.NameTable);
+            nsmgr.AddNamespace("ladder", "http://www.siemens.com/railautomation/westrace/installation");
+            XmlNodeList equationsListsNodes = doc.DocumentElement.SelectNodes("/ladder:Installation/ladder:EquationsLists", nsmgr);
+
+            if ((equationsListsNodes == null) || (equationsListsNodes.Count != 1))
+            {
+                throw new Exception("Unexpected value for of EquationsLists nodes.");
+            }
+            
+            XmlNodeList equationsListNodes = equationsListsNodes.Item(0).SelectNodes("ladder:EquationsList", nsmgr);
+            if ((equationsListsNodes == null) || (equationsListsNodes.Count != 1))
+            {
+                throw new Exception("Unexpected value for of EquationsLists nodes.");
+            }
+
+            XmlNodeList equationListNodes = equationsListNodes.Item(0).SelectNodes("ladder:EquationList", nsmgr);
+            if ((equationsListsNodes == null) || (equationsListsNodes.Count != 1))
+            {
+                throw new Exception("Unexpected value for of EquationsLists nodes.");
+            }
+
+            XmlNodeList listItemNodes = equationListNodes.Item(0).SelectNodes("ladder:ListItem", nsmgr);
+            foreach (XmlNode listItemNode in listItemNodes)
+            {
+                XmlNodeList equationNodes = listItemNode.SelectNodes("ladder:Equation", nsmgr);
+                if ((equationsListsNodes == null) || (equationsListsNodes.Count != 1))
+                {
+                    throw new Exception("Unexpected value for of EquationsLists nodes.");
+                }
+
+                ladder.AddRung(ParseEquation(equationNodes.Item(0), nsmgr));
+            }
+
+            return ladder;
+        }
+
+        static Rung ParseEquation(XmlNode equationNode, XmlNamespaceManager nsmgr)
+        {
+            Rung llr = new()
+            {
+                output = equationNode.SelectSingleNode("ladder:Output", nsmgr).InnerText,
+                formula = ParseExpr(equationNode.SelectSingleNode("ladder:Expr", nsmgr), nsmgr)
+            };
+
+            return llr;
+        }
+
+        static AbstractFirstOrderFormula ParseExpr(XmlNode exprNode, XmlNamespaceManager nsmgr)
+        {
+            string op = exprNode.SelectSingleNode("ladder:Op", nsmgr).InnerText;
+            XmlNodeList exprItemNodes = exprNode.SelectNodes("ladder:ExprItem", nsmgr);
+
+            // Parse each exprItem
+            List<AbstractFirstOrderFormula> parsedExprItems = new();
+            foreach (XmlNode exprItem in exprItemNodes)
+            {
+                parsedExprItems.Add(ParseExprItem(exprItem, nsmgr));
+            }
+
+            AbstractFirstOrderFormula? result = null;
+
+            switch (op)
+            {
+                case "AND":
+                    result = MakeAnd(parsedExprItems);
+                    break;
+                case "OR":
+                    result = MakeOr(parsedExprItems);
+                    break;
+                default:
+                    throw new Exception("Unexpected expression Op: " + op);
+            }
+
+            return result;
+        }
+
+        static AbstractFirstOrderFormula ParseExprItem(XmlNode expressionNode, XmlNamespaceManager nsmgr)
+        {
+            // These can have eiher a Input element or an ExprItem element
+            if (expressionNode.ChildNodes.Count != 1)
+            {
+                throw new Exception("Unexpected number of children of ExprItem nodes: " + expressionNode.ChildNodes.Count);
+            }
+
+            XmlNode child = expressionNode.ChildNodes.Item(0);
+            string nameOfChildElement = child.Name;
+
+            switch (nameOfChildElement)
+            {
+                case "Input":
+                    return ParseInput(child, nsmgr);
+                case "Expr":
+                    return ParseExpr(child, nsmgr);
+                default:
+                    throw new Exception("Unexpected child of ExprItem: " + nameOfChildElement);
+            }
+        }
+
+        static AbstractFirstOrderFormula ParseInput(XmlNode inputNode, XmlNamespaceManager nsmgr)
+        {
+            XmlNode name = inputNode.SelectSingleNode("ladder:Name", nsmgr);
+            XmlNode negated = inputNode.SelectSingleNode("ladder:Negate", nsmgr);
+            if (negated != null && negated.InnerText.Equals("true"))
+            {
+                return MakeNegatedVar(name.InnerText);
+            }
+            else
+            {
+                return MakeVar(name.InnerText);
+            }
+        }
+
+    }
+}

@@ -1,0 +1,47 @@
+﻿namespace SwanLLVerifier.Utils
+{
+    public static class ConsistencyChecker
+    {
+        public enum VersusType
+        {
+            IvVsBmc,
+            IvVsIc3,
+            BmcVsIc3
+        }
+
+        public static bool CalculateConsistency(VersusType vsType, bool arg1, bool arg2)
+        {
+            return vsType switch
+            {
+                VersusType.IvVsBmc => CheckIvVsBmcConsistency(arg1, arg2),
+                VersusType.IvVsIc3 => CheckIvVsIc3ResultConsistency(arg1, arg2),
+                VersusType.BmcVsIc3 => CheckBmcVsIc3ResultConsistency(arg1, arg2),
+                _ => throw new ArgumentException("Ïnvalid Arguments.")
+            };
+        }
+
+        public static bool CheckIvVsBmcConsistency(bool ivResult, bool bmcResult)
+        {
+            if ((ivResult && bmcResult) || (!ivResult && bmcResult) || (!ivResult & !bmcResult))
+                return true;
+            else // (ivResult && !bmcResult)
+                return false;
+        }
+
+        public static bool CheckIvVsIc3ResultConsistency(bool ivResult, bool ic3Result)
+        {
+            if ((ivResult && ic3Result) || (!ivResult && ic3Result) || (!ivResult & !ic3Result))
+                return true;
+            else // (ivResult && !ic3Result)
+                return false;
+        }
+
+        public static bool CheckBmcVsIc3ResultConsistency(bool bmcResult, bool ic3Result)
+        {
+            if ((bmcResult && ic3Result) || (bmcResult && !ic3Result) || (!bmcResult & !ic3Result))
+                return true;
+            else // (!bmcResult && ic3Result)
+                return false;
+        }
+    }
+}

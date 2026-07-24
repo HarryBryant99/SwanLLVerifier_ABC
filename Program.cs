@@ -710,7 +710,7 @@ public static class Program
         // Output an inductive or bounded model checking problem in the SMTLib format
         SMTLibUtil.ToSMTLibInductive(ladder, safety, "example1");
 
-        SMTLibUtil.ToSMTLibBoundedModelChecking(ladder, safety, 100, "example1");
+        //SMTLibUtil.ToSMTLibBoundedModelChecking(ladder, safety, 100, "example1");
     }
 
     public static void CheckConsistency()

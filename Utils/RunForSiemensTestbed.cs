@@ -1175,7 +1175,10 @@ namespace SwanLLVerifier.Utils
                 string ivResult = "";
                 //string bmcResult = "";
 
-                Console.WriteLine(condFileName);
+                String ladderFileName = lochnessTrackPlanTptpPath.Split("/").Last();
+                String verificationCondtion = ladderFileName + "_" + condFileName;
+
+                Console.WriteLine(verificationCondtion);
 
                 Console.WriteLine(lochnessSafetyFile);
                 Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>");

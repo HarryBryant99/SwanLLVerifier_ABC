@@ -1121,7 +1121,7 @@ namespace SwanLLVerifier.Utils
         {
 
             // empty the output file content on every new run
-            File.WriteAllText(outputFilepath, "");
+            //File.WriteAllText(outputFilepath, "");
 
             // string[] allLochnessCondDirectories = Directory.GetDirectories(
             //     lochnessTptpSafetyDirPath

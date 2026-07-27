@@ -1208,7 +1208,7 @@ namespace SwanLLVerifier.Utils
                 );
 
                 // create Directory of fileName if it doesn't exist
-                string? directoryName = Path.GetDirectoryName("810");
+                string? directoryName = "810";
                 if (!string.IsNullOrWhiteSpace(directoryName))
                 {
                     Directory.CreateDirectory(directoryName);
@@ -1225,7 +1225,7 @@ namespace SwanLLVerifier.Utils
                         modelForTfLadder.LatchNamesAndValues
                     );
                     aigConstructor.Decorate();
-                    aigConstructor.ConstructAigerFile("810/810_v2.aag");
+                    aigConstructor.ConstructAigerFile(directoryName + "/810_v2.aag");
 
                     Thread.Sleep(100);
 
@@ -1259,7 +1259,7 @@ namespace SwanLLVerifier.Utils
 
                 try
                 {
-                    SMTLibUtil.ToSMTLibInductive(ladder, negatedSafety, "results/810/810_smtlib");
+                    SMTLibUtil.ToSMTLibInductive(ladder, negatedSafety, "results/" + directoryName + "/810_smtlib");
                     //SMTLibUtil.ToSMTLibInductive(ladder, transformedNegSafety, "lochness_transformed");
                     //SMTLibUtil.ToSMTLibInductive(transformedLadder, transformedNegSafety, "mostyn_transformed");
                     //SMTLibUtil.ToSMTLibBoundedModelChecking(ladder, negatedSafety, 100, "lochness810_transformed");

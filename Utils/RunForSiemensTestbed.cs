@@ -1248,7 +1248,7 @@ namespace SwanLLVerifier.Utils
 
                 try
                 {
-                    SMTLibUtil.ToSMTLibInductive(ladder, negatedSafety, "results/810_smtlib");
+                    SMTLibUtil.ToSMTLibInductive(ladder, negatedSafety, "results/z3/810_smtlib");
                     //SMTLibUtil.ToSMTLibInductive(ladder, transformedNegSafety, "lochness_transformed");
                     //SMTLibUtil.ToSMTLibInductive(transformedLadder, transformedNegSafety, "mostyn_transformed");
                     //SMTLibUtil.ToSMTLibBoundedModelChecking(ladder, negatedSafety, 100, "lochness810_transformed");

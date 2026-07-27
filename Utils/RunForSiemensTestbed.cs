@@ -1206,6 +1206,12 @@ namespace SwanLLVerifier.Utils
                     negatedSafety
                 );
 
+                string? directoryName = Path.GetDirectoryName("810");
+                if (directoryName != null && !Directory.Exists(directoryName))
+                {
+                    Directory.CreateDirectory(directoryName);
+                }
+
                 try
                 {
                     AigConstructor aigConstructor = new(
@@ -1214,7 +1220,7 @@ namespace SwanLLVerifier.Utils
                         modelForTfLadder.LatchNamesAndValues
                     );
                     aigConstructor.Decorate();
-                    aigConstructor.ConstructAigerFile("810_v2.aag");
+                    aigConstructor.ConstructAigerFile(directoryName + "/810_v2.aag");
 
                     Thread.Sleep(100);
 
@@ -1248,7 +1254,7 @@ namespace SwanLLVerifier.Utils
 
                 try
                 {
-                    SMTLibUtil.ToSMTLibInductive(ladder, negatedSafety, "results/z3/810_smtlib");
+                    SMTLibUtil.ToSMTLibInductive(ladder, negatedSafety, "results/" + directoryName + "/810_smtlib");
                     //SMTLibUtil.ToSMTLibInductive(ladder, transformedNegSafety, "lochness_transformed");
                     //SMTLibUtil.ToSMTLibInductive(transformedLadder, transformedNegSafety, "mostyn_transformed");
                     //SMTLibUtil.ToSMTLibBoundedModelChecking(ladder, negatedSafety, 100, "lochness810_transformed");

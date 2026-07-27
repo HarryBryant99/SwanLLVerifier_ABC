@@ -1213,7 +1213,7 @@ namespace SwanLLVerifier.Utils
                         modelForTfLadder.LatchNamesAndValues
                     );
                     aigConstructor.Decorate();
-                    aigConstructor.ConstructAigerFile("810_test");
+                    aigConstructor.ConstructAigerFile("810_v2.aag");
 
                     Thread.Sleep(100);
 

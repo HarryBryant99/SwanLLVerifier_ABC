@@ -1175,10 +1175,11 @@ namespace SwanLLVerifier.Utils
                 string ivResult = "";
                 //string bmcResult = "";
 
+                //Verifcation Condition Folder and File Name
                 String ladderFileName = Path.GetFileName(Path.GetDirectoryName(lochnessTrackPlanTptpPath)!);
                 String verificationCondtion = ladderFileName + "_" + condFileName;
 
-                Console.WriteLine(verificationCondtion);
+                //Console.WriteLine(verificationCondtion);
 
                 Console.WriteLine(lochnessSafetyFile);
                 Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
@@ -1213,7 +1214,7 @@ namespace SwanLLVerifier.Utils
                 );
 
                 // create Directory of fileName if it doesn't exist
-                string? directoryName = "810";
+                string? directoryName = "810/" + verificationCondtion;
                 if (!string.IsNullOrWhiteSpace(directoryName))
                 {
                     Directory.CreateDirectory(directoryName);

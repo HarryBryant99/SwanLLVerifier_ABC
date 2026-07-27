@@ -116,8 +116,8 @@ namespace SwanLLVerifier.Utils
             // );
             string lochnessTrackPlanTptpPath = Path.Combine(
                 sourceRootPath,
-                "LochNess-822",
-                "Ladder822.tptp"
+                //"LochNess-822",
+                "Ladder.tptp"
             );
             // string lochnessSafetyDirPath = Path.Combine(
             //     sourceRootPath,
@@ -125,18 +125,18 @@ namespace SwanLLVerifier.Utils
             // );
             string lochnessTptpSafetyDirPath = Path.Combine(
                 sourceRootPath,
-                "LochNess-822\\822_tptp_files"
+                "810\\SafetyProperties"
             );
             // string outputFilepath = "lochness810_tptp_ic3_output_26_july_2.csv";
-            string outputFilepath = "lochness822_tptp_ic3_output_by_mike_feb_18_2026.csv";
+            string outputFilepath = "lochness810_tptp_ic3_output_by_mike_feb_18_2026.csv";
 
-            // RunForLochNess(
-            // relativePath,
-            // sourceRootPath,
-            // lochnessTrackPlanTptpPath,
-            // lochnessTptpSafetyDirPath,
-            // outputFilepath
-            // );
+             RunForLochNess(
+             relativePath,
+             sourceRootPath,
+             lochnessTrackPlanTptpPath,
+             lochnessTptpSafetyDirPath,
+             outputFilepath
+             );
 
             // turned off 27/07
             // RunClausegenInductiveVerification();

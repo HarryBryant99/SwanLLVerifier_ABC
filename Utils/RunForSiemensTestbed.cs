@@ -125,7 +125,7 @@ namespace SwanLLVerifier.Utils
             // );
             string lochnessTptpSafetyDirPath = Path.Combine(
                 sourceRootPath,
-                "810\\SafetyProperties"
+                "810/SafetyProperties"
             );
             // string outputFilepath = "lochness810_tptp_ic3_output_26_july_2.csv";
             string outputFilepath = "lochness810_tptp_ic3_output_by_mike_feb_18_2026.csv";

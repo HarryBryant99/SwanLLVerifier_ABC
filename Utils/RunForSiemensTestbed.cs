@@ -8,6 +8,7 @@ using SwanLLVerifier.TptpParser;
 using static SwanLLVerifier.PropositionalLogic.PropositionalFormulaBuilder;
 using SwanLLVerifier.PropositionalLogic;
 using SwanLLVerifier.SMTLib;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SwanLLVerifier.Utils
 {
@@ -1206,10 +1207,14 @@ namespace SwanLLVerifier.Utils
                     negatedSafety
                 );
 
+                // create Directory of fileName if it doesn't exist
                 string? directoryName = Path.GetDirectoryName("810");
-                if (directoryName != null && !Directory.Exists(directoryName))
+                if (!string.IsNullOrWhiteSpace(directoryName))
                 {
                     Directory.CreateDirectory(directoryName);
+                } else
+                {
+                    Directory.CreateDirectory("Test");
                 }
 
                 try

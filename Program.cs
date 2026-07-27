@@ -114,7 +114,7 @@ public static class Program
         //AbstractFirstOrderFormula generatedFormula = RandomFormulaGenerator.Generate(100);
         //PrettyPrinter.PrettyPrint(generatedFormula);
 
-        //RunForSiemensTestbed rfstb = new();
+        RunForSiemensTestbed rfstb = new();
         // RunMultipleTest();
         // applyAigmoveAndAigResetThenRunIC3("results/Examples/exHarry-p0.aag");
         // applyAigmoveAndAigResetThenRunIC3("results/Examples/exHarry-p1.aag");
@@ -125,10 +125,10 @@ public static class Program
         //     fileName: "simpleExample/PDExampleReachability.aag",
         //     ladderPath: "simpleExample/program-liveness-example.tptp",
         //     safetyPropertyString: "~(\"A_0\" & \"B_1\")",
-        //     // safetyPropertyString: "~(~(\"A_1\"))",
+             // safetyPropertyString: "~(~(\"A_1\"))",
         //     initialisedLatches: new Dictionary<string, bool>
         //     {
-        //         // initialise latches to false
+                 // initialise latches to false
         //         { "vA_1", false },
         //         { "vB_1", false },
         //     }
@@ -138,7 +138,7 @@ public static class Program
 
         // TestExampleSafetyMic();
         //CheckConsistency();
-        TestSMTLibProduction();
+        //TestSMTLibProduction();
 
         //new GraphPlotter().CanvaBarChartCSVGenerator();
         //new GraphPlotter().GenerateMostynProgressStatusTable();

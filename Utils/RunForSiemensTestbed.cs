@@ -138,7 +138,8 @@ namespace SwanLLVerifier.Utils
             // outputFilepath
             // );
 
-            RunClausegenInductiveVerification();
+            // turned off 27/07
+            // RunClausegenInductiveVerification();
 
             // GenerateTptpFilesForBMC();
         }

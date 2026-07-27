@@ -1175,7 +1175,7 @@ namespace SwanLLVerifier.Utils
                 string ivResult = "";
                 //string bmcResult = "";
 
-                String ladderFileName = lochnessTrackPlanTptpPath.Split("/").Last();
+                String ladderFileName = Path.GetFileName(Path.GetDirectoryName(lochnessTrackPlanTptpPath)!);
                 String verificationCondtion = ladderFileName + "_" + condFileName;
 
                 Console.WriteLine(verificationCondtion);

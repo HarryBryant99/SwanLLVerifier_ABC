@@ -1175,6 +1175,8 @@ namespace SwanLLVerifier.Utils
                 string ivResult = "";
                 //string bmcResult = "";
 
+                Console.WriteLine(condFileName);
+
                 Console.WriteLine(lochnessSafetyFile);
                 Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 

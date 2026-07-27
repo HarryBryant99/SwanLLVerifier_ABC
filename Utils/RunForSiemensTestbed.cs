@@ -1236,17 +1236,17 @@ namespace SwanLLVerifier.Utils
 
                     Thread.Sleep(100);
 
-                    watch.Start();
-                    ic3Output = Program.RunIC3();
-                    watch.Stop();
+                    //watch.Start();
+                    //ic3Output = Program.RunIC3();
+                    //watch.Stop();
 
                     //Console.WriteLine($">>> Processing .cond file {condFileName}.");
                     Console.WriteLine($">>> Processing .tptp file {condFileName}.");
 
                     // ========== in your loop
                     //chapterName = $"{dirName}_{condFileName}";
-                    doesPropHoldInIC3 = (ic3Output == 1) ? "no" : "yes";
-                    elapsedTime = (watch.Elapsed.TotalSeconds);
+                    //doesPropHoldInIC3 = (ic3Output == 1) ? "no" : "yes";
+                    //elapsedTime = (watch.Elapsed.TotalSeconds);
                 }
 
                 catch (Exception ex)

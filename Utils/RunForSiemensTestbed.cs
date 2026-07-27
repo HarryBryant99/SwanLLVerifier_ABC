@@ -1294,12 +1294,12 @@ namespace SwanLLVerifier.Utils
 
                 _ = csv.AppendLine(newLine);
                 // append to output file after every safety property processed to avoid data loss in case of any unexpected crash before the end of the loop
-                File.WriteAllText(outputFilepath, csv.ToString());
+                //File.WriteAllText(outputFilepath, csv.ToString());
             }
 
-            File.WriteAllText(outputFilepath, ""); // empty the file first before writing the final results
+            //File.WriteAllText(outputFilepath, ""); // empty the file first before writing the final results
 
-            File.AppendAllText(outputFilepath, csv.ToString());
+            //File.AppendAllText(outputFilepath, csv.ToString());
             //}
         }
 

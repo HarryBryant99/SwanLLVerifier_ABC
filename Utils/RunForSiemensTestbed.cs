@@ -1232,7 +1232,7 @@ namespace SwanLLVerifier.Utils
                         modelForTfLadder.LatchNamesAndValues
                     );
                     aigConstructor.Decorate();
-                    aigConstructor.ConstructAigerFile(directoryName + "/810_v2.aag");
+                    aigConstructor.ConstructAigerFile(directoryName + "/" + verificationCondtion + ".aag");
 
                     Thread.Sleep(100);
 
@@ -1266,7 +1266,7 @@ namespace SwanLLVerifier.Utils
 
                 try
                 {
-                    SMTLibUtil.ToSMTLibInductive(ladder, negatedSafety, "results/" + directoryName + "/810_smtlib");
+                    SMTLibUtil.ToSMTLibInductive(ladder, negatedSafety, "results/" + directoryName + "/" + verificationCondtion);
                     //SMTLibUtil.ToSMTLibInductive(ladder, transformedNegSafety, "lochness_transformed");
                     //SMTLibUtil.ToSMTLibInductive(transformedLadder, transformedNegSafety, "mostyn_transformed");
                     //SMTLibUtil.ToSMTLibBoundedModelChecking(ladder, negatedSafety, 100, "lochness810_transformed");

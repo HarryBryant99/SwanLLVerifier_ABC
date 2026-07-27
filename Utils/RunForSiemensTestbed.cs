@@ -116,7 +116,7 @@ namespace SwanLLVerifier.Utils
             // );
             string lochnessTrackPlanTptpPath = Path.Combine(
                 sourceRootPath,
-                //"LochNess-822",
+                "810",
                 "Ladder.tptp"
             );
             // string lochnessSafetyDirPath = Path.Combine(

@@ -7,6 +7,7 @@ using SwanLLVerifier.LadderLogic;
 using SwanLLVerifier.TptpParser;
 using static SwanLLVerifier.PropositionalLogic.PropositionalFormulaBuilder;
 using SwanLLVerifier.PropositionalLogic;
+using SwanLLVerifier.SMTLib;
 
 namespace SwanLLVerifier.Utils
 {
@@ -1245,12 +1246,12 @@ namespace SwanLLVerifier.Utils
                     }
                 }
 
-                //try
-                //{
-                //    SMTLibUtil.ToSMTLibInductive(ladder, negatedSafety, "lochness822_original");
-                //    //SMTLibUtil.ToSMTLibInductive(ladder, transformedNegSafety, "lochness_transformed");
-                //    //SMTLibUtil.ToSMTLibInductive(transformedLadder, transformedNegSafety, "mostyn_transformed");
-                //    //SMTLibUtil.ToSMTLibBoundedModelChecking(ladder, negatedSafety, 100, "lochness810_transformed");
+                try
+                {
+                    SMTLibUtil.ToSMTLibInductive(ladder, negatedSafety, "lochness822_original");
+                    //SMTLibUtil.ToSMTLibInductive(ladder, transformedNegSafety, "lochness_transformed");
+                    //SMTLibUtil.ToSMTLibInductive(transformedLadder, transformedNegSafety, "mostyn_transformed");
+                    //SMTLibUtil.ToSMTLibBoundedModelChecking(ladder, negatedSafety, 100, "lochness810_transformed");
 
                 //    string[] z3Results = ExecuteZ3InShell();
 
@@ -1260,11 +1261,11 @@ namespace SwanLLVerifier.Utils
                 //    //transformedIVStepResult = z3Results[3].Replace("\n", String.Empty);
 
                 //    ivResult = ((originalIVInitResult == "unsat") && (originalIVStepResult == "unsat")) ? "yes" : "no";
-                //}
-                //catch (Exception ex)
-                //{
-                //    Console.WriteLine($">>>>>>>>>>>>>>> EXCEPTION: {ex.Message}");
-                //}
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($">>>>>>>>>>>>>>> EXCEPTION: {ex.Message}");
+                }
 
                 var newLine = string.Format(
                     "{0},{1},{2}",

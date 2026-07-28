@@ -28,10 +28,10 @@ namespace SwanLLVerifier.SMTLib
             using StreamWriter writerStep = new(streamStep);
             OutputHeader(writerStep);
             OutputCreateVars(writerStep, allVariables, 0);
-            OutputCreateVars(writerStep, allVariables, 1);
-            OutputCreateVars(writerStep, allVariables, 2);
+            //OutputCreateVars(writerStep, allVariables, 1);
+            //OutputCreateVars(writerStep, allVariables, 2);
             OutputLadder(writerStep, allVariables, ladder, 1);
-            OutputLadder(writerStep, allVariables, ladder, 2);
+            //OutputLadder(writerStep, allVariables, ladder, 2);
             OutputSafetyCondition(writerStep, safetyCondition, 1, false);
             OutputSafetyCondition(writerStep, safetyCondition, 2, true);
             OutputFooter(writerStep);

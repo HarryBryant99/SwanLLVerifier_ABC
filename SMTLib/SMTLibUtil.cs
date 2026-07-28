@@ -17,7 +17,7 @@ namespace SwanLLVerifier.SMTLib
             {
                 OutputHeader(writerBase);
                 OutputCreateVars(writerBase, allVariables, 0);
-                OutputCreateVars(writerBase, allVariables, 1);
+                //OutputCreateVars(writerBase, allVariables, 1);
                 OutputInitVars(writerBase, allVariables, 0);
                 OutputLadder(writerBase, allVariables, ladder, 1);
                 OutputSafetyCondition(writerBase, safetyCondition, 1, true);
@@ -65,7 +65,8 @@ namespace SwanLLVerifier.SMTLib
                     return NameToSMTLib(varName);
                 }).ToString();
                 _ = seenVariables.Add(rung.output);
-                string output = NameToSMTLib(NameToVersionedName(rung.output, targetVersion));
+                //string output = NameToSMTLib(NameToVersionedName(rung.output, targetVersion));
+                string output = NameToSMTLib(rung.output);
 
                 writer.WriteLine($"(assert(= {output} {formula}))");
             }

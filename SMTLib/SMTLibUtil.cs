@@ -12,11 +12,13 @@ namespace SwanLLVerifier.SMTLib
         {
             ISet<string> allVariables = ladder.AllVariables();
 
+            string FileName = filenameBasename.Split("/").Last();
+
             FileStream streamBase = new(filenameBasename + "_base.smt", FileMode.Create);
             using (StreamWriter writerBase = new(streamBase))
             {
                 OutputHeader(writerBase);
-                OutputProofLog(writerBase, filenameBasename);
+                OutputProofLog(writerBase, (FileName + "_base"));
                 OutputCreateVars(writerBase, allVariables, 0);
                 //OutputCreateVars(writerBase, allVariables, 1);
                 OutputInitVars(writerBase, allVariables, 0);
@@ -28,7 +30,7 @@ namespace SwanLLVerifier.SMTLib
             FileStream streamStep = new(filenameBasename + "_step.smt", FileMode.Create);
             using StreamWriter writerStep = new(streamStep);
             OutputHeader(writerStep);
-            OutputProofLog(writerStep, filenameBasename);
+            OutputProofLog(writerStep, (FileName + "_step"));
             OutputCreateVars(writerStep, allVariables, 0);
             //OutputCreateVars(writerStep, allVariables, 1);
             //OutputCreateVars(writerStep, allVariables, 2);

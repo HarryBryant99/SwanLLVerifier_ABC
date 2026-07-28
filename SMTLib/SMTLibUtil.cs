@@ -61,7 +61,8 @@ namespace SwanLLVerifier.SMTLib
             {
                 string formula = FormulaToSMTLib(rung.formula, (varName) => {
                     int version = seenVariables.Contains(varName) ? targetVersion : targetVersion - 1;
-                    return NameToSMTLib(NameToVersionedName(varName, version));
+                    //return NameToSMTLib(NameToVersionedName(varName, version));
+                    return NameToSMTLib(varName);
                 }).ToString();
                 _ = seenVariables.Add(rung.output);
                 string output = NameToSMTLib(NameToVersionedName(rung.output, targetVersion));
@@ -80,7 +81,8 @@ namespace SwanLLVerifier.SMTLib
         {
             foreach (string variable in allVariables)
             {
-                writer.WriteLine($"(declare-const {NameToSMTLib(NameToVersionedName(variable, version))} Bool)");
+                //writer.WriteLine($"(declare-const {NameToSMTLib(NameToVersionedName(variable, version))} Bool)");
+                writer.WriteLine($"(declare-const {NameToSMTLib(variable)} Bool)");
             }
         }
 
@@ -88,7 +90,8 @@ namespace SwanLLVerifier.SMTLib
         {
             foreach (string variable in allVariables)
             {
-                writer.WriteLine($"(assert(= {NameToSMTLib(NameToVersionedName(variable, version))} false))");
+                //writer.WriteLine($"(assert(= {NameToSMTLib(NameToVersionedName(variable, version))} false))");
+                writer.WriteLine($"(assert(= {NameToSMTLib(variable)} false))");
             }
         }
 

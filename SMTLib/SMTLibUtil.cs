@@ -16,6 +16,7 @@ namespace SwanLLVerifier.SMTLib
             using (StreamWriter writerBase = new(streamBase))
             {
                 OutputHeader(writerBase);
+                OutputProofLog(writerBase, filenameBasename);
                 OutputCreateVars(writerBase, allVariables, 0);
                 //OutputCreateVars(writerBase, allVariables, 1);
                 OutputInitVars(writerBase, allVariables, 0);
@@ -27,6 +28,7 @@ namespace SwanLLVerifier.SMTLib
             FileStream streamStep = new(filenameBasename + "_step.smt", FileMode.Create);
             using StreamWriter writerStep = new(streamStep);
             OutputHeader(writerStep);
+            OutputProofLog(writerStep, filenameBasename);
             OutputCreateVars(writerStep, allVariables, 0);
             //OutputCreateVars(writerStep, allVariables, 1);
             //OutputCreateVars(writerStep, allVariables, 2);
@@ -76,6 +78,15 @@ namespace SwanLLVerifier.SMTLib
         {
             writer.WriteLine("(set-option :print-success false)");
             writer.WriteLine("(set-logic QF_UF)");
+        }
+
+
+        //Proof Log Header
+        private static void OutputProofLog(StreamWriter writer, string filename)
+        {
+            writer.WriteLine("(set-option :sat.euf true)");
+            writer.WriteLine("(set-option :tactic.default_tactic smt)");
+            writer.WriteLine("(set-option :solver.proof.log " + filename + ".smt2)");
         }
 
         private static void OutputCreateVars(StreamWriter writer, ISet<string> allVariables, int version)

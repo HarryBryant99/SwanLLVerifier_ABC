@@ -1229,13 +1229,13 @@ namespace SwanLLVerifier.Utils
 
                 // create Directory of fileName if it doesn't exist
                 string? directoryName = ladderFileName + "/" + verificationCondtion;
-                if (!string.IsNullOrWhiteSpace(directoryName))
-                {
-                    Directory.CreateDirectory(directoryName);
-                } else
-                {
-                    Directory.CreateDirectory("Test");
-                }
+                //if (!string.IsNullOrWhiteSpace(directoryName))
+                //{
+                //    Directory.CreateDirectory(directoryName);
+                //} else
+                //{
+                //    Directory.CreateDirectory("Test");
+                //}
 
                 try
                 {

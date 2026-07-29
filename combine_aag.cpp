@@ -139,7 +139,7 @@ int main(int argc, char* argv[])
 
     // Convert to binary AIG
     std::string command =
-        "./aigtoaig " + tempFile + " " + aigFile;
+        "./aiger-1.9.4/aigtoaig " + tempFile + " " + aigFile;
 
     std::cout << "Running: " << command << std::endl;
 

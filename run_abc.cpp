@@ -119,7 +119,7 @@ int main(int argc, char* argv[]) {
                 terms.push_back("v" + vars[i] + "_1");
             }
             else if (pattern[i] == '0') {
-                terms.push_back("¬" + "v" + vars[i] + "_1");
+                terms.push_back("¬v" + vars[i] + "_1");
             }
         }
 

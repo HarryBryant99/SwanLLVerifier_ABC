@@ -1,3 +1,5 @@
+//Processing the Aiger file to .aig with names
+
 #include <cstdio>
 #include <cstdlib>
 #include <fstream>

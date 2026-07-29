@@ -233,15 +233,15 @@ int main(int argc, char* argv[]) {
     std::ofstream smtFile(outputFile);
 
     if (smtFile.is_open()) {
-        smtFile << "; Auto-generated SMT-LIB invariant\n";
+        //smtFile << "; Auto-generated SMT-LIB invariant\n";
 
         //for (const auto& var : vars) {
         //    smtFile << "(declare-fun " << var << " () Bool)\n";
         //}
 
         //smtFile << "\n";
-        smtFile << "(assert (not " << smtExpr << "))\n";
-        //smtFile << "(check-sat)\n";
+        smtFile << "(assert (not " << smtExpr << "))";
+        //smtFile << "\n(check-sat)\n";
 
         smtFile.close();
 

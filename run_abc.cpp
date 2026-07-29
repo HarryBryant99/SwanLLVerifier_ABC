@@ -116,10 +116,10 @@ int main(int argc, char* argv[]) {
 
         for (size_t i = 0; i < pattern.size(); i++) {
             if (pattern[i] == '1') {
-                terms.push_back(vars[i]);
+                terms.push_back("v" + vars[i] + "_1");
             }
             else if (pattern[i] == '0') {
-                terms.push_back("¬" + vars[i]);
+                terms.push_back("¬" + "v" + vars[i] + "_1");
             }
         }
 

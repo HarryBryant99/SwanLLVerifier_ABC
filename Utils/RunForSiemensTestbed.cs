@@ -134,7 +134,7 @@ namespace SwanLLVerifier.Utils
             // );
             string lochnessTptpSafetyDirPath = Path.Combine(
                 sourceRootPath,
-                "810/SafetyProperties"
+                "810/1_Property"
             );
 
             string LevelCrossingSafetyDirPath = Path.Combine(
@@ -148,8 +148,8 @@ namespace SwanLLVerifier.Utils
              RunForLochNess(
              relativePath,
              sourceRootPath,
-             LevelCrossingTptpPath,
-             LevelCrossingSafetyDirPath,
+             lochnessTrackPlanTptpPath,
+             lochnessTptpSafetyDirPath,
              outputFilepath
              );
 

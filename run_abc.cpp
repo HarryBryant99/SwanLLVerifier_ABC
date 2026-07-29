@@ -235,13 +235,13 @@ int main(int argc, char* argv[]) {
     if (smtFile.is_open()) {
         smtFile << "; Auto-generated SMT-LIB invariant\n";
 
-        for (const auto& var : vars) {
-            smtFile << "(declare-fun " << var << " () Bool)\n";
-        }
+        //for (const auto& var : vars) {
+        //    smtFile << "(declare-fun " << var << " () Bool)\n";
+        //}
 
-        smtFile << "\n";
+        //smtFile << "\n";
         smtFile << "(assert (not " << smtExpr << "))\n";
-        smtFile << "(check-sat)\n";
+        //smtFile << "(check-sat)\n";
 
         smtFile.close();
 

@@ -122,9 +122,15 @@ namespace SwanLLVerifier.Utils
                 "Ladder.tptp"
             );
 
-            string LevelCrossingTptpPath = Path.Combine(
+            string TestTptpPath = Path.Combine(
                 sourceRootPath,
                 "TestInterlocking",
+                "Ladder.tptp"
+            );
+
+            string LevelCrossingTptpPath = Path.Combine(
+                sourceRootPath,
+                "LevelCrossing",
                 "Ladder.tptp"
             );
 
@@ -137,9 +143,14 @@ namespace SwanLLVerifier.Utils
                 "810/1_Property"
             );
 
-            string LevelCrossingSafetyDirPath = Path.Combine(
+            string TestSafetyDirPath = Path.Combine(
                 sourceRootPath,
                 "TestInterlocking/SafetyProperties"
+            );
+
+            string LevelCrossingSafetyDirPath = Path.Combine(
+                sourceRootPath,
+                "LevelCrossing/SafetyProperties"
             );
 
             // string outputFilepath = "lochness810_tptp_ic3_output_26_july_2.csv";

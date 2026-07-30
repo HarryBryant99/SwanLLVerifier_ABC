@@ -131,7 +131,7 @@ namespace SwanLLVerifier.Utils
             string LevelCrossingTptpPath = Path.Combine(
                 sourceRootPath,
                 "LevelCrossing",
-                "Ladder.tptp"
+                "LevelCrossing.tptp"
             );
 
             // string lochnessSafetyDirPath = Path.Combine(

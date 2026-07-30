@@ -24,7 +24,7 @@
         {
             get;
             set;
-        }
+        } = null!;
 
         /// Property to get and set the type of the term
         [System.Xml.Serialization.XmlIgnoreAttribute()]

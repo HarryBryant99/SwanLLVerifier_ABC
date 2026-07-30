@@ -1240,12 +1240,6 @@ namespace SwanLLVerifier.Utils
                         {
                             r.Initialised = false;
                         }
-                        else
-                        {
-                            throw new Exception(
-                                $"Ladder does not contain a rung with output variable '{kv.Key}'"
-                            );
-                        }
                     }
                 }
 

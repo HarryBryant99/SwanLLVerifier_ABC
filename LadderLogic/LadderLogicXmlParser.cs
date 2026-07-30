@@ -59,8 +59,13 @@ namespace SwanLLVerifier.LadderLogic
 
         static AbstractFirstOrderFormula ParseExpr(XmlNode exprNode, XmlNamespaceManager nsmgr)
         {
-            string op = exprNode.SelectSingleNode("ladder:Op", nsmgr).InnerText;
-            XmlNodeList exprItemNodes = exprNode.SelectNodes("ladder:ExprItem", nsmgr);
+            string op = exprNode.SelectSingleNode("ladder:Op", nsmgr)!.InnerText;
+            XmlNodeList? exprItemNodes = exprNode.SelectNodes("ladder:ExprItem", nsmgr);
+
+            if (exprItemNodes == null)
+            {
+            throw new InvalidOperationException("Missing ExprItem nodes.");
+            }
 
             // Parse each exprItem
             List<AbstractFirstOrderFormula> parsedExprItems = new();
@@ -94,7 +99,13 @@ namespace SwanLLVerifier.LadderLogic
                 throw new Exception("Unexpected number of children of ExprItem nodes: " + expressionNode.ChildNodes.Count);
             }
 
-            XmlNode child = expressionNode.ChildNodes.Item(0);
+            XmlNode? child = expressionNode.ChildNodes.Item(0);
+
+            if (child == null)
+            {
+                throw new InvalidOperationException("Expression node has no children.");
+            }
+
             string nameOfChildElement = child.Name;
 
             switch (nameOfChildElement)
@@ -110,8 +121,8 @@ namespace SwanLLVerifier.LadderLogic
 
         static AbstractFirstOrderFormula ParseInput(XmlNode inputNode, XmlNamespaceManager nsmgr)
         {
-            XmlNode name = inputNode.SelectSingleNode("ladder:Name", nsmgr);
-            XmlNode negated = inputNode.SelectSingleNode("ladder:Negate", nsmgr);
+            XmlNode? name = inputNode.SelectSingleNode("ladder:Name", nsmgr);
+            XmlNode? negated = inputNode.SelectSingleNode("ladder:Negate", nsmgr);
 
             if (name == null)
             {

@@ -8,10 +8,10 @@
         
         /// Property to get and set the name of the Predicate.
         [System.Xml.Serialization.XmlAttribute("name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         /// Property to get and set the terms passed as arguements to the predicate.
         [System.Xml.Serialization.XmlElement("Term", typeof(SwanLLVerifier.ETCSDC_Properties.Term), Namespace = Constants.NAMESPACE)]
-        public SwanLLVerifier.ETCSDC_Properties.Term[] Term { get; set; }        
+        public SwanLLVerifier.ETCSDC_Properties.Term[] Term { get; set; } = Array.Empty<Term>();        
     }
 }

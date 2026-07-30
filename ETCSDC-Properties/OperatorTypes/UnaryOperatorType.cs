@@ -16,7 +16,7 @@ namespace SwanLLVerifier.ETCSDC_Properties.OperatorTypes
         [System.Xml.Serialization.XmlChoiceIdentifier("OperandType")]
 
         /// Property to get and set the operand on the formula.
-        public AbstractFirstOrderFormula Operand { get; set; }
+        public AbstractFirstOrderFormula Operand { get; set; } = null!;
 
         /// Property to get the operand type for the formula
         public AbstractFirstOrderFormula.FOLFormulaType OperandType

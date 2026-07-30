@@ -1037,7 +1037,7 @@ namespace SwanLLVerifier.Utils
                     negatedSafety
                 );
 
-                //int ic3Output = 0;
+                int ic3Output = 0;
                 var watch = new Stopwatch();
                 //string chapterName = "";
                 string doesPropHoldInIC3 = "";

@@ -68,13 +68,7 @@ namespace SwanLLVerifier.TptpParser
 
         private static AbstractFirstOrderFormula ParsePrimary(Tokeniser t)
         {
-            string? variable = t.PeekVariableAndAdvance();
-
-            if (variable == null)
-            {
-                throw new InvalidOperationException("Expected a variable.");
-            }
-            
+            string variable = t.PeekVariableAndAdvance();
             if (variable != null)
             {
                 // variable = AigConstructor.FormatVarName(variable);

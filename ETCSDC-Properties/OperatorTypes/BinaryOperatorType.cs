@@ -15,7 +15,7 @@ namespace SwanLLVerifier.ETCSDC_Properties.OperatorTypes
         [System.Xml.Serialization.XmlElement("Brackets", typeof(Brackets), Namespace = Constants.NAMESPACE)]
         [System.Xml.Serialization.XmlChoiceIdentifier("OperandTypes")]
 		/// Property to get and set the operands of the expression as an array.
-		public AbstractFirstOrderFormula[] Operands { get; set; }
+		public AbstractFirstOrderFormula[] Operands { get; set; } = null!;
 
         /// Property to get and set the left operand of the expression.
         public AbstractFirstOrderFormula LeftOperand

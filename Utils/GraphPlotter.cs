@@ -87,7 +87,13 @@ namespace SwanLLVerifier.Utils
 
                 while (!parser.EndOfData)
                 {
-                    string[] fields = parser.ReadFields();
+                    string[]? fields = parser.ReadFields();
+
+                    if (fields == null || fields.Length == 0)
+                    {
+                        continue;
+                    }
+
                     string chapterName = fields[0];
 
                     int v5IVPassPercent = int.Parse(fields[1]);
@@ -138,7 +144,12 @@ namespace SwanLLVerifier.Utils
             while (!parser.EndOfData)
             {
                 //Process row
-                string[] fields = parser.ReadFields();
+                string[]? fields = parser.ReadFields();
+                if (fields == null)
+                {
+                    continue; // or return
+                }
+
                 string chapterAndCondFilename = fields[0];
                 bool ivResult = fields[1].Trim() == "yes";
                 bool bmcResult = fields[2].Trim() == "yes";

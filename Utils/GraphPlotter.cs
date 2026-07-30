@@ -29,7 +29,12 @@ namespace SwanLLVerifier.Utils
                 while (!parser.EndOfData)
                 {
                     //Process row
-                    string[] fields = parser.ReadFields();
+                    string[]? fields = parser.ReadFields();
+
+                    if (fields == null || fields.Length == 0)
+                    {
+                        continue; // or return, depending on your logic
+                    }
 
                     safetyGroupName = fields[0].Split("_").Last();
                     chapterName = fields[0].Replace($"_{safetyGroupName}", "");

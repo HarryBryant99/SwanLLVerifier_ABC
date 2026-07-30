@@ -12,14 +12,19 @@ namespace SwanLLVerifier.LadderLogic
 
             var nsmgr = new XmlNamespaceManager(doc.NameTable);
             nsmgr.AddNamespace("ladder", "http://www.siemens.com/railautomation/westrace/installation");
-            XmlNodeList equationsListsNodes = doc.DocumentElement.SelectNodes("/ladder:Installation/ladder:EquationsLists", nsmgr);
+            //XmlNodeList equationsListsNodes = doc.DocumentElement.SelectNodes("/ladder:Installation/ladder:EquationsLists", nsmgr);
+
+            XmlNodeList? equationsListsNodes =
+            (doc.DocumentElement
+            ?? throw new Exception("Document has no root element."))
+            .SelectNodes("/ladder:Installation/ladder:EquationsLists", nsmgr);
 
             if ((equationsListsNodes == null) || (equationsListsNodes.Count != 1))
             {
                 throw new Exception("Unexpected value for of EquationsLists nodes.");
             }
             
-            XmlNodeList equationsListNodes = equationsListsNodes.Item(0).SelectNodes("ladder:EquationsList", nsmgr);
+            XmlNodeList? equationsListNodes = equationsListsNodes.Item(0)!.SelectNodes("ladder:EquationsList", nsmgr);
             if ((equationsListsNodes == null) || (equationsListsNodes.Count != 1))
             {
                 throw new Exception("Unexpected value for of EquationsLists nodes.");
@@ -32,6 +37,11 @@ namespace SwanLLVerifier.LadderLogic
             }
 
             XmlNodeList listItemNodes = equationListNodes.Item(0).SelectNodes("ladder:ListItem", nsmgr);
+
+            if (listItemNodes == null) {
+                throw new Exception("listItemNodes is empty");
+            }
+
             foreach (XmlNode listItemNode in listItemNodes)
             {
                 XmlNodeList equationNodes = listItemNode.SelectNodes("ladder:Equation", nsmgr)!

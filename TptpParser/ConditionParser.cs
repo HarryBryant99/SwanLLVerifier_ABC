@@ -16,7 +16,7 @@ namespace SwanLLVerifier.TptpParser
             using (var reader = new StreamReader(tptpSafetyFilePath, Encoding.UTF8))
             {
                 string line;
-                while ((line = reader.ReadLine()) != null)
+                while ((line = reader.ReadLine()!) != null)
                 {
                     if (string.IsNullOrWhiteSpace(line))
                         continue;

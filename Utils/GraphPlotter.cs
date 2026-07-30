@@ -172,7 +172,14 @@ namespace SwanLLVerifier.Utils
             while (!parser.EndOfData)
             {
                 //Process row
-                string[] fields = parser.ReadFields();
+                string[]? fields = parser.ReadFields();
+
+                if (fields == null || fields.Length == 0)
+                {
+                // handle end of file or invalid record
+                return;
+                }
+
                 string chapterAndCondFilename = fields[0];
                 string origIvBase = fields[6].Trim();
                 string tfIvBase = fields[9].Trim();

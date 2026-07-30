@@ -1037,19 +1037,19 @@ namespace SwanLLVerifier.Utils
                     negatedSafety
                 );
 
-                int ic3Output = 0;
+                //int ic3Output = 0;
                 var watch = new Stopwatch();
-                string chapterName = "";
+                //string chapterName = "";
                 string doesPropHoldInIC3 = "";
-                string originalIVInitResult = "";
-                string originalIVStepResult = "";
-                string originalBMCResult = "";
-                string transformedIVInitResult = "";
-                string transformedIVStepResult = "";
-                string transformedBMCResult = "";
+                //string originalIVInitResult = "";
+                //string originalIVStepResult = "";
+                //string originalBMCResult = "";
+                //string transformedIVInitResult = "";
+                //string transformedIVStepResult = "";
+                //string transformedBMCResult = "";
                 double elapsedTime = 0;
-                string ivResult = "";
-                string bmcResult = "";
+                //string ivResult = "";
+                //string bmcResult = "";
 
                 try
                 {
@@ -1178,14 +1178,14 @@ namespace SwanLLVerifier.Utils
                 var watch = new Stopwatch();
                 //string chapterName = "";
                 string doesPropHoldInIC3 = "";
-                string originalIVInitResult = "";
-                string originalIVStepResult = "";
+                //string originalIVInitResult = "";
+                //string originalIVStepResult = "";
                 //string originalBMCResult = "";
                 //string transformedIVInitResult = "";
                 //string transformedIVStepResult = "";
                 //string transformedBMCResult = "";
                 double elapsedTime = 0;
-                string ivResult = "";
+                //string ivResult = "";
                 //string bmcResult = "";
 
                 //Verifcation Condition Folder and File Name

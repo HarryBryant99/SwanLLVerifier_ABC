@@ -77,28 +77,40 @@ namespace SwanLLVerifier.Utils
             PrettyPrint(rung.formula);
         }
 
-        // pretify using threads
         public static void PrettyPrintWithDelay(
             AbstractFirstOrderFormula formula,
-            int delayInMilliseconds = 1000
-        )
+            int delayInMilliseconds = 1000)
         {
-            Thread thread = new Thread(
-                () =>
-                {
-                    PrettyPrint(formula);
-                },
-                16 * 1024 * 1024
-            ); // 16 MB stack size
-            thread.Start();
-            thread.Join(delayInMilliseconds);
-            if (thread.IsAlive)
+            var task = Task.Run(() => PrettyPrint(formula));
+
+            if (!task.Wait(delayInMilliseconds))
             {
-                thread.Abort();
-                Console.WriteLine("Pretty printing took too long and was aborted.");
-                // // Optionally, you could log the formula that was being printed
-                // Console.WriteLine("Formula: " + Prettify(formula));
+                Console.WriteLine("Pretty printing took too long.");
             }
         }
+
+        // pretify using threads
+        //public static void PrettyPrintWithDelay(
+        //    AbstractFirstOrderFormula formula,
+        //    int delayInMilliseconds = 1000
+        //)
+        //{
+        //    Thread thread = new Thread(
+        //        () =>
+        //        {
+        //            PrettyPrint(formula);
+        //        },
+        //        16 * 1024 * 1024
+        //    ); // 16 MB stack size
+        //    thread.Start();
+        //    thread.Join(delayInMilliseconds);
+        //    if (thread.IsAlive)
+        //    {
+        //        thread.Abort();
+        //        Console.WriteLine("Pretty printing took too long and was aborted.");
+                // // Optionally, you could log the formula that was being printed
+                // Console.WriteLine("Formula: " + Prettify(formula));
+        //    }
+        //}
     }
 }

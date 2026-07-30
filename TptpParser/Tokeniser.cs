@@ -157,7 +157,7 @@ namespace SwanLLVerifier.TptpParser
         /// matched, the state of the tokeniser is unchanged.
         /// </summary>
         /// <returns>The variable if matched, null otherwise.</returns>
-        public string PeekVariableAndAdvance()
+        public string? PeekVariableAndAdvance()
         {
             if (AtEnd())
             {
@@ -170,8 +170,23 @@ namespace SwanLLVerifier.TptpParser
                 Advance();
                 return token;
             }
+
             return null;
         }
+        //public string PeekVariableAndAdvance()
+        //{
+        //    if (AtEnd())
+        //    {
+        //        return null;
+        //    }
+        //    string token = Peek();
+        //    if (token.StartsWith("v") && Regex.IsMatch(token, @"^v[a-zA-Z0-9_]+$"))
+        //    {
+        //        Advance();
+        //        return token;
+        //    }
+        //    return null;
+        //}
 
         public int GetPosition()
         {

@@ -1231,16 +1231,21 @@ namespace SwanLLVerifier.Utils
                                 $"Ladder does not contain a rung with output variable '{kv.Key}'"
                             );
                         }
-
-                        // Rung? rung = ladder.Rungs.FirstOrDefault(r => r.output == AigConstructor.FormatVarName(kv.Key));
-                        // if (rung != null)
-                        // {
-                        //     rung.Initialised = kv.Value;
-                        // }
-                        // else
-                        // {
-                        //     throw new Exception($"Ladder does not contain a rung with output variable '{kv.Key}'");
-                        // }
+                    }
+                } else
+                {
+                    foreach (Rung r in ladder.Rungs)
+                    {
+                        if (r != null)
+                        {
+                            r.Initialised = false;
+                        }
+                        else
+                        {
+                            throw new Exception(
+                                $"Ladder does not contain a rung with output variable '{kv.Key}'"
+                            );
+                        }
                     }
                 }
 

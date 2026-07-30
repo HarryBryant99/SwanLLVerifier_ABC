@@ -618,7 +618,7 @@ namespace SwanLLVerifier.Utils
                 {
                     transformedNegSafety = TransformToAig.Transform(negatedSafety);
 
-                    int ic3Output = 0;
+                    //int ic3Output = 0;
 
                     AigConstructor aigConstructor = new(
                         transformedLadder,
@@ -925,7 +925,7 @@ namespace SwanLLVerifier.Utils
                 {
                     transformedNegSafety = TransformToAig.Transform(negatedSafety);
 
-                    int ic3Output = 0;
+                    //int ic3Output = 0;
 
                     AigConstructor aigConstructor = new(
                         transformedLadder,
@@ -1174,7 +1174,7 @@ namespace SwanLLVerifier.Utils
             {
                 string condFileName = lochnessSafetyFile.Split("/").Last();
 
-                int ic3Output;
+                //int ic3Output;
                 var watch = new Stopwatch();
                 //string chapterName = "";
                 string doesPropHoldInIC3 = "";

@@ -1151,7 +1151,8 @@ namespace SwanLLVerifier.Utils
             //}
         }
 
-        public static void RunForLochNess(string relativePath, string sourceRootPath, string lochnessTrackPlanTptpPath, string lochnessTptpSafetyDirPath, string outputFilepath)
+        public static void RunForLochNess(string relativePath, string sourceRootPath, string lochnessTrackPlanTptpPath, string lochnessTptpSafetyDirPath, 
+            string outputFilepath, IDictionary<string, bool>? initialisedLatches = null)
         {
 
             // empty the output file content on every new run
@@ -1213,6 +1214,35 @@ namespace SwanLLVerifier.Utils
                 String ladderFileName = Path.GetFileName(Path.GetDirectoryName(lochnessTrackPlanTptpPath)!);
                 String condFileNameWithoutExt = Path.GetFileNameWithoutExtension(condFileName);
                 String verificationCondtion = ladderFileName + "_" + condFileNameWithoutExt;
+
+                if (initialisedLatches != null)
+                {
+                    // iterate through the dictionary and set the Initialised property of the corresponding rungs
+                    foreach (var kv in initialisedLatches)
+                    {
+                        Rung? rung = ladder.Rungs.FirstOrDefault(r => r.output == kv.Key);
+                        if (rung != null)
+                        {
+                            rung.Initialised = kv.Value;
+                        }
+                        else
+                        {
+                            throw new Exception(
+                                $"Ladder does not contain a rung with output variable '{kv.Key}'"
+                            );
+                        }
+
+                        // Rung? rung = ladder.Rungs.FirstOrDefault(r => r.output == AigConstructor.FormatVarName(kv.Key));
+                        // if (rung != null)
+                        // {
+                        //     rung.Initialised = kv.Value;
+                        // }
+                        // else
+                        // {
+                        //     throw new Exception($"Ladder does not contain a rung with output variable '{kv.Key}'");
+                        // }
+                    }
+                }
 
                 //Console.WriteLine(verificationCondtion);
 

@@ -16,11 +16,11 @@ namespace SwanLLVerifier.ETCSDC_Properties
 
         /// Property to get and set the description of the property.
         [System.Xml.Serialization.XmlElement(Namespace = Constants.NAMESPACE)]
-        public string Description { get; set; }
+        public string Description { get; set; } = null!;
 
         /// Property to get and set the name of the property.
         [System.Xml.Serialization.XmlAttribute("name", Namespace = Constants.NAMESPACE)]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         /// Property to get and set the formula associated with the property.
         [System.Xml.Serialization.XmlElement("Negation", typeof(Negation), Namespace = Constants.NAMESPACE)]
@@ -34,7 +34,7 @@ namespace SwanLLVerifier.ETCSDC_Properties
         public SwanLLVerifier.ETCSDC_Properties.AbstractFirstOrderFormula FirstOrderFormula { get; set; }
 
         /// Property to get and set the type of the formula associated with the property.
-        public AbstractFirstOrderFormula.FOLFormulaType FormulaType
+        public required AbstractFirstOrderFormula.FOLFormulaType FormulaType
         {
             get { return FirstOrderFormula.FormulaType; }
             set { FirstOrderFormula.FormulaType = value; }

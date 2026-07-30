@@ -712,6 +712,11 @@ namespace SwanLLVerifier.Utils
             string PDjson = File.ReadAllText(PDpath);
             var PDdoc = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(PDjson);
 
+            if (PDdoc is null)
+            {
+            throw new InvalidOperationException("Failed to deserialize PDjson.");
+            }
+
             // normalize keys
             var PDdict = new Dictionary<string, JsonElement>();
             foreach (var kv in PDdoc)

@@ -20,7 +20,7 @@ namespace SwanLLVerifier.TptpParser
 
             using (var reader = new StreamReader(inputStream, Encoding.UTF8))
             {
-                string? line;
+                string line;
                 while ((line = reader.ReadLine()) != null)
                 {
                     if (string.IsNullOrWhiteSpace(line))

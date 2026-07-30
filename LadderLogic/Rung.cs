@@ -5,16 +5,16 @@ namespace SwanLLVerifier.LadderLogic
 {
     public class Rung
     {
-        public string Output { get; set; } = string.Empty;
+        public string output { get; set; } = string.Empty;
 
-        public AbstractFirstOrderFormula Formula { get; set; } = null!;
+        public AbstractFirstOrderFormula formula { get; set; } = null!;
 
         public bool? Initialised { get; set; }
 
         public ISet<string> AllVariables()
         {
-            ISet<string> allVariables = PropositionalFormulaUtils.AllVariablesFromFormula(Formula);
-            _ = allVariables.Add(Output);
+            ISet<string> allVariables = PropositionalFormulaUtils.AllVariablesFromFormula(formula);
+            _ = allVariables.Add(output);
 
             return allVariables;
         }

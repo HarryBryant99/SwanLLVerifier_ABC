@@ -30,13 +30,13 @@ namespace SwanLLVerifier.LadderLogic
                 throw new Exception("Unexpected value for of EquationsLists nodes.");
             }
 
-            XmlNodeList equationListNodes = equationsListNodes.Item(0).SelectNodes("ladder:EquationList", nsmgr);
+            XmlNodeList equationListNodes = equationsListNodes!.Item(0)!.SelectNodes("ladder:EquationList", nsmgr)!;
             if ((equationsListsNodes == null) || (equationsListsNodes.Count != 1))
             {
                 throw new Exception("Unexpected value for of EquationsLists nodes.");
             }
 
-            XmlNodeList listItemNodes = equationListNodes.Item(0).SelectNodes("ladder:ListItem", nsmgr);
+            XmlNodeList listItemNodes = equationListNodes.Item(0)!.SelectNodes("ladder:ListItem", nsmgr)!;
 
             if (listItemNodes == null) {
                 throw new Exception("listItemNodes is empty");

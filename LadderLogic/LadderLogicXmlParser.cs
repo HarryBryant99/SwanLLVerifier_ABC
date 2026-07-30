@@ -112,6 +112,12 @@ namespace SwanLLVerifier.LadderLogic
         {
             XmlNode name = inputNode.SelectSingleNode("ladder:Name", nsmgr);
             XmlNode negated = inputNode.SelectSingleNode("ladder:Negate", nsmgr);
+
+            if (name == null)
+            {
+            throw new InvalidOperationException("Input node does not contain a Name element.");
+            }
+            
             if (negated != null && negated.InnerText.Equals("true"))
             {
                 return MakeNegatedVar(name.InnerText);

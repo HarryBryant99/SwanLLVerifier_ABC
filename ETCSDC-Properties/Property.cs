@@ -31,10 +31,10 @@ namespace SwanLLVerifier.ETCSDC_Properties
         [System.Xml.Serialization.XmlElement("Equivalent", typeof(Equivalent), Namespace = Constants.NAMESPACE)]
         [System.Xml.Serialization.XmlElement("Brackets", typeof(Brackets), Namespace = Constants.NAMESPACE)]
         [System.Xml.Serialization.XmlChoiceIdentifier("FormulaType")]
-        public SwanLLVerifier.ETCSDC_Properties.AbstractFirstOrderFormula FirstOrderFormula { get; set; }
+        public SwanLLVerifier.ETCSDC_Properties.AbstractFirstOrderFormula FirstOrderFormula { get; set; } = null!;
 
         /// Property to get and set the type of the formula associated with the property.
-        public required AbstractFirstOrderFormula.FOLFormulaType FormulaType
+        public AbstractFirstOrderFormula.FOLFormulaType FormulaType
         {
             get { return FirstOrderFormula.FormulaType; }
             set { FirstOrderFormula.FormulaType = value; }

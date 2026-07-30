@@ -34,13 +34,17 @@ namespace SwanLLVerifier.LadderLogic
             XmlNodeList listItemNodes = equationListNodes.Item(0).SelectNodes("ladder:ListItem", nsmgr);
             foreach (XmlNode listItemNode in listItemNodes)
             {
-                XmlNodeList equationNodes = listItemNode.SelectNodes("ladder:Equation", nsmgr);
+                XmlNodeList equationNodes = listItemNode.SelectNodes("ladder:Equation", nsmgr)!
+                    ?? throw new Exception("Missing Equation nodes.");
                 if ((equationsListsNodes == null) || (equationsListsNodes.Count != 1))
                 {
                     throw new Exception("Unexpected value for of EquationsLists nodes.");
                 }
 
-                ladder.AddRung(ParseEquation(equationNodes.Item(0), nsmgr));
+                XmlNode equationNode = equationNodes.Item(0)!
+                    ?? throw new Exception("Equation node missing.");
+
+                ladder.AddRung(ParseEquation(equationNode, nsmgr));
             }
 
             return ladder;
@@ -50,8 +54,8 @@ namespace SwanLLVerifier.LadderLogic
         {
             Rung llr = new()
             {
-                output = equationNode.SelectSingleNode("ladder:Output", nsmgr).InnerText,
-                formula = ParseExpr(equationNode.SelectSingleNode("ladder:Expr", nsmgr), nsmgr)
+                output = equationNode.SelectSingleNode("ladder:Output", nsmgr)!.InnerText,
+                formula = ParseExpr(equationNode.SelectSingleNode("ladder:Expr", nsmgr)!, nsmgr)
             };
 
             return llr;

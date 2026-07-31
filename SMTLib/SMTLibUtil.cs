@@ -12,6 +12,9 @@ namespace SwanLLVerifier.SMTLib
         {
             ISet<string> allVariables = ladder.AllVariables();
 
+            // get any variables from safety property, eg for initial states
+            allVariables.UnionWith(safetyCondition.GetAllVariables());
+
             string FileName = filenameBasename.Split("/").Last();
 
             FileStream streamBase = new(filenameBasename + "_base.smt", FileMode.Create);

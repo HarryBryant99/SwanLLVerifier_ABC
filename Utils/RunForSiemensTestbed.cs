@@ -1215,31 +1215,44 @@ namespace SwanLLVerifier.Utils
                 String condFileNameWithoutExt = Path.GetFileNameWithoutExtension(condFileName);
                 String verificationCondtion = ladderFileName + "_" + condFileNameWithoutExt;
 
-                if (initialisedLatches != null)
+                // if (initialisedLatches != null)
+                // {
+                //     // iterate through the dictionary and set the Initialised property of the corresponding rungs
+                //     foreach (var kv in initialisedLatches)
+                //     {
+                //         Rung? rung = ladder.Rungs.FirstOrDefault(r => r.output == kv.Key);
+                //         if (rung != null)
+                //         {
+                //             rung.Initialised = kv.Value;
+                //         }
+                //         else
+                //         {
+                //             throw new Exception(
+                //                 $"Ladder does not contain a rung with output variable '{kv.Key}'"
+                //             );
+                //         }
+                //     }
+                // } else
+                // {
+                //     foreach (Rung r in ladder.Rungs)
+                //     {
+                //         if (r != null)
+                //         {
+                //             r.Initialised = false;
+                //         }
+                //     }
+                // }
+
+                foreach (Rung r in ladder.Rungs)
                 {
-                    // iterate through the dictionary and set the Initialised property of the corresponding rungs
-                    foreach (var kv in initialisedLatches)
+                    if (initialisedLatches != null &&
+                        initialisedLatches.TryGetValue(r.output, out bool initialised))
                     {
-                        Rung? rung = ladder.Rungs.FirstOrDefault(r => r.output == kv.Key);
-                        if (rung != null)
-                        {
-                            rung.Initialised = kv.Value;
-                        }
-                        else
-                        {
-                            throw new Exception(
-                                $"Ladder does not contain a rung with output variable '{kv.Key}'"
-                            );
-                        }
+                        r.Initialised = initialised;
                     }
-                } else
-                {
-                    foreach (Rung r in ladder.Rungs)
+                    else
                     {
-                        if (r != null)
-                        {
-                            r.Initialised = false;
-                        }
+                        r.Initialised = false;
                     }
                 }
 

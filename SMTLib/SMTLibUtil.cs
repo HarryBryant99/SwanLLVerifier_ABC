@@ -13,7 +13,13 @@ namespace SwanLLVerifier.SMTLib
             ISet<string> allVariables = ladder.AllVariables();
 
             // get any variables from safety property, eg for initial states
-            allVariables.UnionWith(safetyCondition.GetAllVariables());
+            foreach (string variable in safetyCondition.GetAllVariables())
+            {
+                string baseVar = BaseVariableName(variable);
+
+                allVariables.Add($"{baseVar}_0");
+                allVariables.Add($"{baseVar}_1");
+            }
 
             string FileName = filenameBasename.Split("/").Last();
 
@@ -42,6 +48,17 @@ namespace SwanLLVerifier.SMTLib
             OutputSafetyCondition(writerStep, safetyCondition, 1, false);
             OutputSafetyCondition(writerStep, safetyCondition, 2, true);
             OutputFooter(writerStep);
+        }
+
+        // Return the variable without any priming or non priming
+        private static string BaseVariableName(string variable)
+        {
+            if (variable.EndsWith("_0") || variable.EndsWith("_1"))
+            {
+                return variable[..^2];
+            }
+
+            return variable;
         }
 
         public static void ToSMTLibBoundedModelChecking(Ladder ladder, AbstractFirstOrderFormula safetyCondition, int kSteps, string filenameBasename)

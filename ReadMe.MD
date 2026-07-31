@@ -50,7 +50,7 @@ Toolchain
 Step 3:
 - After running the SwanLLVerifier the generated files will be in the results folder. They will be in the folder named afer the Ladder (e.g. LevelCrossing), then in a sub folder named after the Ladder_Safety Property so that if they are mutliple properties generated they are all stored separately (e.g. results/LevelCrossing/LevelCrossing_p1)
 - In each folder you will find the .aag file, the detailed aiger file, and the smt files for z3.
-- Run "combine_aag" with the .aag file as a parameter and it will build a .aig file for ABC with the numbering key built in.
+- Run "combine_aag" with the .aag file as a parameter and it will build a .aig file for ABC with the numbering key built in. For ABC you need to run the "make" command.
 - Run "ic3_with_invariant" with Ladder_Safety Property will run ABC, produce the invariant and append it to the step case smt file.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

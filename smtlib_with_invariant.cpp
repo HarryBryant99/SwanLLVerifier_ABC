@@ -2,6 +2,8 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <vector>
+#include <stdexcept>
 
 std::string readFile(const std::string& filename)
 {
@@ -14,6 +16,7 @@ std::string readFile(const std::string& filename)
 
     std::stringstream buffer;
     buffer << file.rdbuf();
+
     return buffer.str();
 }
 
@@ -57,22 +60,40 @@ void insertFilesIntoSMT(
         << " file(s) into "
         << targetFile
         << "\n";
+
+    for (const auto& file : insertFiles)
+    {
+        std::cout << "  - " << file << "\n";
+    }
 }
 
 int main(int argc, char* argv[])
 {
     if (argc != 2)
     {
-        std::cerr << "Usage: " << argv[0] << " <name>\n";
+        std::cerr
+            << "Usage: "
+            << argv[0]
+            << " <name>\n";
         return 1;
     }
 
     std::string name = argv[1];
 
-    insertFilesIntoSMT(
-    name + "_step.smt",
+    try
     {
-        name + "_invariant.smtlib",
-        name + "_invariant_base.smtlib"
-    });
+        insertFilesIntoSMT(
+            name + "_step.smt",
+            {
+                name + "_invariant.smtlib",
+                name + "_invariant_base.smtlib"
+            });
+
+        return 0;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << "\n";
+        return 1;
+    }
 }

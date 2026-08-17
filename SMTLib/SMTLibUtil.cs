@@ -48,6 +48,24 @@ namespace SwanLLVerifier.SMTLib
             OutputSafetyCondition(writerStep, safetyCondition, 1, false);
             OutputSafetyCondition(writerStep, safetyCondition, 2, true);
             OutputFooter(writerStep);
+
+            FileStream streamInvBase = new(filenameBasename + "_inv_base.smt", FileMode.Create);
+            using (StreamWriter writerInvBase = new(streamBase))
+            {
+                OutputHeader(writerInvBase);
+                OutputProofLog(writerInvBase, (FileName + "_inv_base"));
+                OutputCreateVars(writerInvBase, allVariables, 0);
+                OutputInitVars(writerInvBase, allVariables, 0);
+                OutputFooter(writerInvBase);
+            }
+
+            FileStream streamInvStep = new(filenameBasename + "_inv_step.smt", FileMode.Create);
+            using StreamWriter writerInvStep = new(streamStep);
+            OutputHeader(writerInvStep);
+            OutputProofLog(writerInvStep, (FileName + "_inv_step"));
+            OutputCreateVars(writerInvStep, allVariables, 0);
+            OutputLadder(writerInvStep, allVariables, ladder, 1);
+            OutputFooter(writerStep);
         }
 
         // Return the variable without any priming or non priming

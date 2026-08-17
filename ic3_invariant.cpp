@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
         return result;
     }
 
-    std::cout << "Running: " << smtCommand << "\n";
+    std::cout << "\nRunning: " << smtCommand << "\n";
 
     result = std::system(smtCommand.c_str());
     if (result != 0)

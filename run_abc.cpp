@@ -7,8 +7,7 @@
 
 std::string buildSMTExpr(
     const std::vector<std::string>& expressions,
-    const std::string& fromSuffix,
-    const std::string& toSuffix)
+    const std::string& suffix)
 {
     std::vector<std::string> smtCubes;
 
@@ -22,15 +21,17 @@ std::string buildSMTExpr(
             if (token == "∧")
                 continue;
 
-            // Replace suffix if requested
-            size_t pos = token.rfind(fromSuffix);
-            if (pos != std::string::npos) {
-                token.replace(pos, fromSuffix.size(), toSuffix);
-            }
+            bool negated = false;
 
             if (token.rfind("¬", 0) == 0) {
-                smtTerms.push_back(
-                    "(not " + token.substr(1) + ")");
+                negated = true;
+                token = token.substr(std::string("¬").size());
+            }
+
+            token += suffix;
+
+            if (negated) {
+                smtTerms.push_back("(not " + token + ")");
             }
             else {
                 smtTerms.push_back(token);
@@ -47,27 +48,29 @@ std::string buildSMTExpr(
         }
         else {
             smtCube = "(and";
-            for (const auto& t : smtTerms) {
-                smtCube += " " + t;
+
+            for (const auto& term : smtTerms) {
+                smtCube += " " + term;
             }
+
             smtCube += ")";
         }
 
         smtCubes.push_back(smtCube);
     }
 
-    if (smtCubes.empty()) {
+    if (smtCubes.empty())
         return "false";
-    }
 
-    if (smtCubes.size() == 1) {
+    if (smtCubes.size() == 1)
         return smtCubes[0];
-    }
 
     std::string smtExpr = "(or";
+
     for (const auto& cube : smtCubes) {
         smtExpr += " " + cube;
     }
+
     smtExpr += ")";
 
     return smtExpr;
@@ -185,14 +188,53 @@ int main(int argc, char* argv[]) {
 
     file.close();
 
-    // Build both SMT expressions
+    std::vector<std::string> expressions;
+
+    for (const std::string& cubeLine : cubes) {
+        std::stringstream ss(cubeLine);
+
+        std::string pattern;
+        std::string outVal;
+
+        ss >> pattern >> outVal;
+
+        if (outVal != "1")
+            continue;
+
+        std::vector<std::string> terms;
+
+        for (size_t i = 0; i < pattern.size() && i < vars.size(); i++) {
+
+            if (pattern[i] == '1') {
+                terms.push_back("v" + vars[i]);
+            }
+            else if (pattern[i] == '0') {
+                terms.push_back("¬v" + vars[i]);
+            }
+        }
+
+        std::string expr;
+
+        if (terms.empty()) {
+            expr = "TRUE";
+        }
+        else {
+            expr = terms[0];
+
+            for (size_t i = 1; i < terms.size(); i++) {
+                expr += " ∧ " + terms[i];
+            }
+        }
+
+        expressions.push_back(expr);
+    }
+
     std::string smtExpr =
-        buildSMTExpr(expressions, "_1", "_1");
+        buildSMTExpr(expressions, "_1");
 
     std::string smtExprBase =
-        buildSMTExpr(expressions, "_1", "_0");
+        buildSMTExpr(expressions, "_0");
 
-    // Print
     std::cout << "\n=== INVARIANT (SMT-LIB) ===\n";
     std::cout << "(assert (not " << smtExpr << "))\n";
 
@@ -204,10 +246,12 @@ int main(int argc, char* argv[]) {
 
     if (posExt != std::string::npos) {
         outputFile.replace(
-            posExt, 4, "_invariant.smtlib");
+            posExt, 4,
+            "_invariant.smtlib");
 
         baseOutputFile.replace(
-            posExt, 4, "_invariant_base.smtlib");
+            posExt, 4,
+            "_invariant_base.smtlib");
     }
     else {
         outputFile += "_invariant.smtlib";

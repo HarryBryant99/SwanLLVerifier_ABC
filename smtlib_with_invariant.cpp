@@ -17,6 +17,48 @@ std::string readFile(const std::string& filename)
     return buffer.str();
 }
 
+void insertFilesIntoSMT(
+    const std::string& targetFile,
+    const std::vector<std::string>& insertFiles)
+{
+    std::string targetContent = readFile(targetFile);
+
+    std::size_t pos = targetContent.find("(check-sat)");
+
+    if (pos == std::string::npos)
+    {
+        throw std::runtime_error(
+            "No (check-sat) found in " + targetFile);
+    }
+
+    std::string additions;
+
+    for (const auto& file : insertFiles)
+    {
+        additions += readFile(file);
+        additions += "\n";
+    }
+
+    targetContent.insert(pos, additions);
+
+    std::ofstream output(targetFile);
+
+    if (!output)
+    {
+        throw std::runtime_error(
+            "Cannot write to " + targetFile);
+    }
+
+    output << targetContent;
+
+    std::cout
+        << "Inserted "
+        << insertFiles.size()
+        << " file(s) into "
+        << targetFile
+        << "\n";
+}
+
 int main(int argc, char* argv[])
 {
     if (argc != 2)
@@ -27,45 +69,10 @@ int main(int argc, char* argv[])
 
     std::string name = argv[1];
 
-    std::string stepFile = name + "_step.smt";
-    std::string invariantFile = name + "_invariant.smtlib";
-
-    try
+    insertFilesIntoSMT(
+    name + "_step.smt",
     {
-        std::string stepContent = readFile(stepFile);
-        std::string invariantContent = readFile(invariantFile);
-
-        std::size_t pos = stepContent.find("(check-sat)");
-
-        if (pos == std::string::npos)
-        {
-            std::cerr << "No (check-sat) found in " << stepFile << "\n";
-            return 1;
-        }
-
-        stepContent.insert(pos, invariantContent + "\n");
-
-        std::ofstream output(stepFile);
-
-        if (!output)
-        {
-            std::cerr << "Cannot write to " << stepFile << "\n";
-            return 1;
-        }
-
-        output << stepContent;
-
-        std::cout << "Inserted contents of "
-                  << invariantFile
-                  << " into "
-                  << stepFile
-                  << "\n";
-    }
-    catch (const std::exception& e)
-    {
-        std::cerr << e.what() << "\n";
-        return 1;
-    }
-
-    return 0;
+        name + "_invariant.smtlib",
+        name + "_invariant_base.smtlib"
+    });
 }

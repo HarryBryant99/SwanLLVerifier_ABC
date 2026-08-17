@@ -88,24 +88,23 @@ int main(int argc, char* argv[])
                 name + "_invariant.smtlib"
             });
 
-        return 0;
-    }
-    catch (const std::exception& e)
-    {
-        std::cerr << e.what() << "\n";
-        return 1;
-    }
 
-        try
-    {
         insertFilesIntoSMT(
             name + "_inv_base.smt",
             {
                 name + "_invariant_base.smtlib"
             });
 
+        insertFilesIntoSMT(
+            name + "_inv_step.smt",
+            {
+                name + "_invariant_base.smtlib",
+                name + "_invariant.smtlib"
+            });
+
         return 0;
     }
+
     catch (const std::exception& e)
     {
         std::cerr << e.what() << "\n";

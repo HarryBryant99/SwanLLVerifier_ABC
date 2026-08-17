@@ -5,6 +5,89 @@
 #include <sstream>
 #include <vector>
 
+std::string buildSMTExpr(
+    const std::vector<std::string>& expressions,
+    const std::string& fromSuffix,
+    const std::string& toSuffix)
+{
+    std::vector<std::string> smtCubes;
+
+    for (const std::string& cube : expressions) {
+        std::stringstream ss(cube);
+        std::string token;
+
+        std::vector<std::string> smtTerms;
+
+        while (ss >> token) {
+            if (token == "∧")
+                continue;
+
+            // Replace suffix if requested
+            size_t pos = token.rfind(fromSuffix);
+            if (pos != std::string::npos) {
+                token.replace(pos, fromSuffix.size(), toSuffix);
+            }
+
+            if (token.rfind("¬", 0) == 0) {
+                smtTerms.push_back(
+                    "(not " + token.substr(1) + ")");
+            }
+            else {
+                smtTerms.push_back(token);
+            }
+        }
+
+        std::string smtCube;
+
+        if (smtTerms.empty()) {
+            smtCube = "true";
+        }
+        else if (smtTerms.size() == 1) {
+            smtCube = smtTerms[0];
+        }
+        else {
+            smtCube = "(and";
+            for (const auto& t : smtTerms) {
+                smtCube += " " + t;
+            }
+            smtCube += ")";
+        }
+
+        smtCubes.push_back(smtCube);
+    }
+
+    if (smtCubes.empty()) {
+        return "false";
+    }
+
+    if (smtCubes.size() == 1) {
+        return smtCubes[0];
+    }
+
+    std::string smtExpr = "(or";
+    for (const auto& cube : smtCubes) {
+        smtExpr += " " + cube;
+    }
+    smtExpr += ")";
+
+    return smtExpr;
+}
+
+bool writeInvariantFile(
+    const std::string& filename,
+    const std::string& smtExpr)
+{
+    std::ofstream file(filename);
+
+    if (!file.is_open()) {
+        return false;
+    }
+
+    file << "(assert (not " << smtExpr << "))";
+
+    return true;
+}
+
 int main(int argc, char* argv[]) {
     if (argc < 2) {
         std::cerr << "Usage: " << argv[0] << " <aiger_file>\n";
@@ -102,153 +185,45 @@ int main(int argc, char* argv[]) {
 
     file.close();
 
-    // === BUILD BOOLEAN EXPRESSION ===
-    std::vector<std::string> expressions;
+    // Build both SMT expressions
+    std::string smtExpr =
+        buildSMTExpr(expressions, "_1", "_1");
 
-    for (const std::string& cubeLine : cubes) {
-        std::stringstream ss(cubeLine);
-        std::string pattern, outVal;
-        ss >> pattern >> outVal;
+    std::string smtExprBase =
+        buildSMTExpr(expressions, "_1", "_0");
 
-        if (outVal != "1") continue;
-
-        std::vector<std::string> terms;
-
-        for (size_t i = 0; i < pattern.size(); i++) {
-            if (pattern[i] == '1') {
-                terms.push_back("v" + vars[i] + "_1");
-            }
-            else if (pattern[i] == '0') {
-                terms.push_back("¬v" + vars[i] + "_1");
-            }
-        }
-
-        std::string expr;
-
-        if (!terms.empty()) {
-            expr = terms[0];
-            for (size_t i = 1; i < terms.size(); i++) {
-                expr += " ∧ " + terms[i];
-            }
-        } else {
-            expr = "TRUE";
-        }
-
-        expressions.push_back(expr);
-    }
-
-    // Combine cubes with OR
-    std::string finalExpr;
-
-
-    if (!expressions.empty()) {
-        if (expressions.size() == 1) {
-            // No brackets needed
-            finalExpr = expressions[0];
-        } else {
-            // Multiple expressions → use brackets
-            finalExpr = "(" + expressions[0] + ")";
-            for (size_t i = 1; i < expressions.size(); i++) {
-                finalExpr += " ∨ (" + expressions[i] + ")";
-            }
-        }
-    }
-
-    std::cout << "\n=== CUBE FORMULA ===\n";
-    std::cout << finalExpr << "\n";
-
-    std::cout << "\n=== INVARIANT ===\n";
-    std::cout << "¬(" << finalExpr << ")\n";
-
-    // === SMT-LIB CONVERSION ===
-    std::vector<std::string> smtCubes;
-
-    for (const std::string& cube : expressions) {
-        std::stringstream ss(cube);
-        std::string token;
-
-        std::vector<std::string> smtTerms;
-
-        while (ss >> token) {
-            if (token == "∧") continue;
-
-            if (token.rfind("¬", 0) == 0) {  // starts with ¬
-                std::string neg = "¬";
-                smtTerms.push_back("(not " + token.substr(neg.size()) + ")");
-            } else {
-                smtTerms.push_back(token);
-            }
-        }
-
-        std::string smtCube;
-
-        if (smtTerms.empty()) {
-            smtCube = "true";
-        }
-        else if (smtTerms.size() == 1) {
-            smtCube = smtTerms[0];
-        }
-        else {
-            smtCube = "(and";
-            for (const auto& t : smtTerms) {
-                smtCube += " " + t;
-            }
-            smtCube += ")";
-        }
-
-        smtCubes.push_back(smtCube);
-    }
-
-    // === BUILD OR EXPRESSION ===
-    std::string smtExpr;
-
-    if (smtCubes.empty()) {
-        smtExpr = "false";
-    }
-    else if (smtCubes.size() == 1) {
-        smtExpr = smtCubes[0];
-    }
-    else {
-        smtExpr = "(or";
-        for (const auto& e : smtCubes) {
-            smtExpr += " " + e;
-        }
-        smtExpr += ")";
-    }
-
-    // === PRINT OUTPUTS ===
+    // Print
     std::cout << "\n=== INVARIANT (SMT-LIB) ===\n";
     std::cout << "(assert (not " << smtExpr << "))\n";
 
-    // === WRITE TO SMTLIB ===
+    std::cout << "\n=== BASE INVARIANT (SMT-LIB) ===\n";
+    std::cout << "(assert (not " << smtExprBase << "))\n";
 
     std::string outputFile = aigFile;
+    std::string baseOutputFile = aigFile;
 
     if (posExt != std::string::npos) {
-        outputFile.replace(posExt, 4, "_invariant.smtlib");
-    } else {
+        outputFile.replace(
+            posExt, 4, "_invariant.smtlib");
+
+        baseOutputFile.replace(
+            posExt, 4, "_invariant_base.smtlib");
+    }
+    else {
         outputFile += "_invariant.smtlib";
+        baseOutputFile += "_invariant_base.smtlib";
     }
 
-    std::ofstream smtFile(outputFile);
+    if (writeInvariantFile(outputFile, smtExpr)) {
+        std::cout << "\nSMT-LIB written to "
+                << outputFile << "\n";
+    }
 
-    if (smtFile.is_open()) {
-        //smtFile << "; Auto-generated SMT-LIB invariant\n";
-
-        //for (const auto& var : vars) {
-        //    smtFile << "(declare-fun " << var << " () Bool)\n";
-        //}
-
-        //smtFile << "\n";
-        smtFile << "(assert (not " << smtExpr << "))";
-        //smtFile << "\n(check-sat)\n";
-
-        smtFile.close();
-
-        std::cout << "\nSMT-LIB written to " << outputFile << "\n";
-    } else {
-        std::cerr << "Error: Could not open file for writing.\n";
+    if (writeInvariantFile(baseOutputFile, smtExprBase)) {
+        std::cout << "\nBase SMT-LIB written to "
+                << baseOutputFile << "\n";
     }
 
     return 0;
+
 }

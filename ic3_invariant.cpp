@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
     std::string abcCommand = "./run_abc " + name + ".aig";
     std::string smtCommand = "./smtlib_with_invariant " + name;
 
-    std::cout << "Running: " << abcCommand << "\n";
+    std::cout << "\nRunning: " << abcCommand << "\n";
 
     int result = std::system(abcCommand.c_str());
     if (result != 0)

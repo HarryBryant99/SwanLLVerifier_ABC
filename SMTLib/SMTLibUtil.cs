@@ -50,7 +50,7 @@ namespace SwanLLVerifier.SMTLib
             OutputFooter(writerStep);
 
             FileStream streamInvBase = new(filenameBasename + "_inv_base.smt", FileMode.Create);
-            using (StreamWriter writerInvBase = new(streamBase))
+            using (StreamWriter writerInvBase = new(streamInvBase))
             {
                 OutputHeader(writerInvBase);
                 OutputProofLog(writerInvBase, (FileName + "_inv_base"));
@@ -60,7 +60,7 @@ namespace SwanLLVerifier.SMTLib
             }
 
             FileStream streamInvStep = new(filenameBasename + "_inv_step.smt", FileMode.Create);
-            using StreamWriter writerInvStep = new(streamStep);
+            using StreamWriter writerInvStep = new(streamInvStep);
             OutputHeader(writerInvStep);
             OutputProofLog(writerInvStep, (FileName + "_inv_step"));
             OutputCreateVars(writerInvStep, allVariables, 0);

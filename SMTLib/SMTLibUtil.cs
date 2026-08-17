@@ -65,7 +65,7 @@ namespace SwanLLVerifier.SMTLib
             OutputProofLog(writerInvStep, (FileName + "_inv_step"));
             OutputCreateVars(writerInvStep, allVariables, 0);
             OutputLadder(writerInvStep, allVariables, ladder, 1);
-            OutputFooter(writerStep);
+            OutputFooter(writerInvStep);
         }
 
         // Return the variable without any priming or non priming

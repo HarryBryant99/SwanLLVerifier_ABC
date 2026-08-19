@@ -20,9 +20,40 @@ std::string readFile(const std::string& filename)
     return buffer.str();
 }
 
+struct InsertFile
+{
+    std::string filename;
+    bool negate;
+};
+
+std::string maybeNegateAssertion(
+    const std::string& content,
+    bool negate)
+{
+    if (!negate)
+    {
+        return content;
+    }
+
+    const std::string prefix = "(assert ";
+
+    if (content.rfind(prefix, 0) == 0 &&
+        content.back() == ')')
+    {
+        std::string body =
+            content.substr(prefix.size(),
+                           content.size() - prefix.size() - 1);
+
+        return "(assert (not " + body + "))";
+    }
+
+    throw std::runtime_error(
+        "Expected SMT content of form '(assert ...)'");
+}
+
 void insertFilesIntoSMT(
     const std::string& targetFile,
-    const std::vector<std::string>& insertFiles)
+    const std::vector<InsertFile>& insertFiles)
 {
     std::string targetContent = readFile(targetFile);
 
@@ -36,9 +67,32 @@ void insertFilesIntoSMT(
 
     std::string additions;
 
-    for (const auto& file : insertFiles)
+    for (const auto& fileInfo : insertFiles)
     {
-        additions += readFile(file);
+        std::string content = readFile(fileInfo.filename);
+
+        if (fileInfo.negate)
+        {
+            const std::string prefix = "(assert ";
+
+            if (content.rfind(prefix, 0) != 0 ||
+                content.empty() ||
+                content.back() != ')')
+            {
+                throw std::runtime_error(
+                    "Expected SMT file to contain a single assertion: "
+                    + fileInfo.filename);
+            }
+
+            std::string body =
+                content.substr(
+                    prefix.size(),
+                    content.size() - prefix.size() - 1);
+
+            content = "(assert (not " + body + "))";
+        }
+
+        additions += content;
         additions += "\n";
     }
 
@@ -61,9 +115,17 @@ void insertFilesIntoSMT(
         << targetFile
         << "\n";
 
-    for (const auto& file : insertFiles)
+    for (const auto& fileInfo : insertFiles)
     {
-        std::cout << "  - " << file << "\n";
+        std::cout << "  - "
+                  << fileInfo.filename;
+
+        if (fileInfo.negate)
+        {
+            std::cout << " (negated)";
+        }
+
+        std::cout << "\n";
     }
 }
 
@@ -85,21 +147,21 @@ int main(int argc, char* argv[])
         insertFilesIntoSMT(
             name + "_step.smt",
             {
-                name + "_invariant.smtlib"
+                {name + "_invariant.smtlib",false}
             });
 
 
         insertFilesIntoSMT(
             name + "_inv_base.smt",
             {
-                name + "_invariant_base.smtlib"
+                {name + "_invariant_base.smtlib",true}
             });
 
         insertFilesIntoSMT(
             name + "_inv_step.smt",
             {
-                name + "_invariant_base.smtlib",
-                name + "_invariant.smtlib"
+                {name + "_invariant_base.smtlib",false},
+                {name + "_invariant.smtlib",true}
             });
 
         return 0;

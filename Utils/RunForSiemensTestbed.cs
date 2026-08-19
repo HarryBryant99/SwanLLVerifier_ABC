@@ -134,6 +134,12 @@ namespace SwanLLVerifier.Utils
                 "LevelCrossing.tptp"
             );
 
+            string CounterExampleTptpPath = Path.Combine(
+                sourceRootPath,
+                "CounterExample",
+                "Ladder.tptp"
+            );
+
             // string lochnessSafetyDirPath = Path.Combine(
             //     sourceRootPath,
             //     "Additional_LochNess_Properties"
@@ -151,6 +157,12 @@ namespace SwanLLVerifier.Utils
             string LevelCrossingSafetyDirPath = Path.Combine(
                 sourceRootPath,
                 "LevelCrossing/SafetyProperties"
+            );
+
+            
+            string CounterExampleSafetyDirPath = Path.Combine(
+                sourceRootPath,
+                "CounterExample/SafetyProperties"
             );
 
             // string outputFilepath = "lochness810_tptp_ic3_output_26_july_2.csv";

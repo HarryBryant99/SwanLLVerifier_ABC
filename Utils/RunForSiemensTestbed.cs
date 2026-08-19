@@ -171,8 +171,8 @@ namespace SwanLLVerifier.Utils
              RunForLochNess(
              relativePath,
              sourceRootPath,
-             LevelCrossingTptpPath,
-             LevelCrossingSafetyDirPath,
+             CounterExampleTptpPath,
+             CounterExampleSafetyDirPath,
              outputFilepath
              );
 

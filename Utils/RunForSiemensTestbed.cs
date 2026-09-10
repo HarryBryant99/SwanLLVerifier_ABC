@@ -165,14 +165,25 @@ namespace SwanLLVerifier.Utils
                 "CounterExample/SafetyProperties"
             );
 
+            string WADT810TptpPath = Path.Combine(
+                sourceRootPath,
+                "810",
+                "810.tptp"
+            );
+
+            string WADT810SafetyDirPath = Path.Combine(
+                sourceRootPath,
+                "810/WADT_A"
+            );
+
             // string outputFilepath = "lochness810_tptp_ic3_output_26_july_2.csv";
-            string outputFilepath = "lochness810_tptp_ic3_output_by_mike_feb_18_2026.csv";
+            string outputFilepath = "810_A.csv";
 
              RunForLochNess(
              relativePath,
              sourceRootPath,
-             CounterExampleTptpPath,
-             CounterExampleSafetyDirPath,
+             WADT810TptpPath,
+             WADT810SafetyDirPath,
              outputFilepath
              );
 
